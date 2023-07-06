@@ -85,7 +85,7 @@ export const MainPage = () => {
             setRightValue(rightValue => rightValue + res)
         }).then(
              ()=> {
-                setSpinning(spinning => false)
+                setSpinning(_ => false)
             }
         )
     }
@@ -142,7 +142,7 @@ export const MainPage = () => {
             <br/><br/>
 
             <DownloadFile
-                filename="test.top"
+                filename="rerult.txt"
                 text={rightValue}
             />
         </>
