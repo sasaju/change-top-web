@@ -85,7 +85,8 @@ export const MainPage = () => {
             setRightValue(rightValue => rightValue + res)
         }).then(
              ()=> {
-                setSpinning(_ => false)
+                 setSpinning(_ => false)
+                 message.info("程序还在alpha阶段，请仔细检查生成是否正确，如有错误可以点击下方工具源码提issue",5  )
             }
         )
     }
