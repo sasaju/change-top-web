@@ -1,14 +1,9 @@
 import processString from "./StringUtil";
-import {read} from "./ChangeTop";
 import {extractSectionAndFormatAndWrite} from "./TopFileUtil";
 
 test('ProcessString',()=>{
     let a = processString("   1  C  1  URE      C      1     0.880229  12.01000   ; amber C  type")
     expect(a.slice(0,4)).toEqual(["   1","  C", "  1", "  URE"])
-})
-
-test("ChangeTop", () =>{
-    read(topExample,(a) => { console.log(a) })
 })
 
 test("extractSectionAndFormatAndWriteTest", () => {

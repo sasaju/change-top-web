@@ -2,11 +2,15 @@ import {Button, message, Space} from "antd";
 import ChangeModeAndInput from "./ChangeModeAndInput";
 import LeftAndRightTextArea from "./LeftAndRightTextArea";
 import DownloadFile from "./ExportResult";
-import {useState} from "react";
+import {ChangeEvent, useState} from "react";
 import {useImmer} from "use-immer";
 import {handleTopStr} from "../../lib/repo";
+import {RadioChangeEvent} from "antd/es/radio/interface";
 
-const ControlButtons = ({handleFileChosen,handleReset}) => {
+const ControlButtons = ({handleFileChosen,handleReset}:{
+    handleFileChosen:(file:File) =>void,
+    handleReset:() => void
+}) => {
     function handleChoseClick() {
         const fileInput = document.getElementById("fileChoose");
         if (fileInput) {
@@ -27,50 +31,56 @@ const ControlButtons = ({handleFileChosen,handleReset}) => {
                     id="fileChoose"
                     style={{ display: "none", margin: '8px 8px' }}
                     accept=".top, .itp"
-                    onChange={(e) => {
-                        handleFileChosen(e.target.files[0]);
-                    }}
+                    onChange={ (e) => {
+                        if (e.target.files == null) {
+                            message.info("未选择文件").then()
+                        } else {
+                            handleFileChosen(e.target.files[0]);
+                        }
+                    }
+                    }
                 />
             </Space>
         </>
     )
 }
 
-const modesInput = {
-    change:{
-        titles:["起始序号","截止序号","增加数值"],
-        placeholders:["包括本身", "包括本身","填写增加的数值"]
-    },
-    delete:{
-        titles:["起始序号","截止序号"],
-        placeholders:["包括本身", "包括本身"]
-    },
-    extra:{
-        titles:["起始序号","截止序号"],
-        placeholders:["包括本身", "包括本身"]
-    },
-}
+const modesInput: Map<string, { titles: string[], placeholders: string[] }> = new Map([
+    ["change", {
+        titles: ["起始序号", "截止序号", "增加数值"],
+        placeholders: ["包括本身", "包括本身", "填写增加的数值"]
+    }],
+    ["delete", {
+        titles: ["起始序号", "截止序号"],
+        placeholders: ["包括本身", "包括本身"]
+    }],
+    ["extra", {
+        titles: ["起始序号", "截止序号"],
+        placeholders: ["包括本身", "包括本身"]
+    }]
+]);
+
 export const MainPage = () => {
     const [leftValue, setLeftValue] = useState("")
     const [rightValue, setRightValue] = useState("")
     const [mode, setMode] = useState("change")
-    const [inputList, setInputList] = useState(modesInput[mode])
+    const [inputList, setInputList] = useState(modesInput.get(mode))
     const [inputContentList, updateInputContentList] = useImmer(["", "", ""])
     const [spinning, setSpinning] = useState(false)
 
 
-    function onLeftChange(e){
+    function onLeftChange(e:ChangeEvent<HTMLInputElement>){
         setLeftValue(e.target.value)
     }
-    function onRightChange(e) {
+    function onRightChange(e:ChangeEvent<HTMLInputElement>) {
         setRightValue(e.target.value)
     }
-    function onModeChange(e) {
+    function onModeChange(e:RadioChangeEvent) {
         setMode(e.target.value)
-        setInputList(modesInput[e.target.value])
+        setInputList(modesInput.get(e.target.value))
     }
 
-    function onInputContentChange(event, index){
+    function onInputContentChange(event:ChangeEvent<HTMLInputElement>, index:number){
         updateInputContentList(
             draft => {
                 draft[index] = event.target.value
@@ -81,7 +91,7 @@ export const MainPage = () => {
     async function onRunClick() {
         setSpinning(true)
         setRightValue("")
-        await handleTopStr(leftValue, mode, inputContentList, (res) => {
+        await handleTopStr(leftValue, mode, inputContentList, (res:string) => {
             setRightValue(rightValue => rightValue + res)
         }).then(
              ()=> {
@@ -91,12 +101,14 @@ export const MainPage = () => {
         )
     }
 
-    function handleFileChosen(selectedFile) {
+    function handleFileChosen(selectedFile:File) {
         try{
             const reader = new FileReader();//这是核心！！读取操作都是由它完成的
             reader.readAsText(selectedFile);
             reader.onload = function (oFREvent) {//读取完毕从中取值
-                setLeftValue(oFREvent.target.result)
+                if (oFREvent.target!=null){
+                    setLeftValue(oFREvent.target.result as string)
+                }
             }
         } catch (e){
             message.info("未选择文件")
@@ -121,9 +133,9 @@ export const MainPage = () => {
 
             <ChangeModeAndInput
                 mode={mode}
-                nums={inputList.titles.length}
-                titles={inputList.titles}
-                placeholders={inputList.placeholders}
+                nums={inputList!.titles.length}
+                titles={inputList!.titles}
+                placeholders={inputList!.placeholders}
                 inputValueList={inputContentList}
                 onModeChange={onModeChange}
                 onInputListChange={onInputContentChange}

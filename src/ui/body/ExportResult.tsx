@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, message} from 'antd';
 import { saveAs } from 'file-saver';
 
-const DownloadFile = ({filename, text}) => {
+const DownloadFile = ({filename, text}:{filename:string, text:string}) => {
     const handleDownload = () => {
         if (text===""){
             message.error("结果为空")

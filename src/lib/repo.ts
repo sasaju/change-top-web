@@ -4,9 +4,9 @@ import {read} from "./ChangeTop";
 //     return new Promise((resolve) => setTimeout(resolve, time));
 // }
 
-export function handleTopStr(leftValue, mode,inputContentList ,outputOneLine) {
+export function handleTopStr(leftValue:string, mode:string,inputContentList:string[] ,outputOneLine:(oneLine:string)=>void) {
     return new Promise(function (resolve, reject) {
         read(leftValue, (oneLine) => outputOneLine(oneLine),mode, inputContentList)
-        resolve()
+        resolve("")
     })
 }
