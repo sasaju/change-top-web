@@ -1,30 +1,39 @@
 import {Input, Space, Radio, Button, Typography, Spin} from "antd";
 import {useImmer} from "use-immer";
+import React from "react";
+import {RadioChangeEvent} from "antd/es/radio/interface";
 const { Text } = Typography;
 
-const modeTitleDict = {
-    change:"调整",
-    delete:"删除",
-    extra:"提取",
+const modeTitleDict = new Map([
+    ["change","调整"],
+    ["delete","删除"],
+    ["extra","提取"],
+])
+
+interface ModelParInputProps {
+    nums: number;
+    titles: string[];
+    placeholders: string[];
+    mode: string;
+    onListChange: (event: React.ChangeEvent<HTMLInputElement>, index: number) => void;
+    inputValueList: string[];
+    onRunClick: () => void;
+    spinning: boolean;
 }
 
-const ModelParInput = ({nums, titles, placeholders, mode, onListChange, inputValueList, onRunClick, spinning}) => {
+const ModelParInput:React.FC<ModelParInputProps> = ({nums, titles, placeholders, mode, onListChange, inputValueList, onRunClick, spinning}) => {
     const inputs = [];
     const [inputsStatusList, updateInputStatusList] = useImmer(["", "", ""])
-    function onContentChange(event, index){
-        onListChange(event, index)
-        if (event.target.value<0){
-            updateInputStatusList(
-                draft => {
-                    draft[index] = "error"
-                }
-            )
-        }else {
-            updateInputStatusList(
-                draft => {
-                    draft[index] = ""
-                }
-            )
+    function onContentChange(event: React.ChangeEvent<HTMLInputElement>, index: number) {
+        onListChange(event, index);
+        if (Number(event.target.value) < 0) {
+            updateInputStatusList(draft => {
+                draft[index] = "error";
+            });
+        } else {
+            updateInputStatusList(draft => {
+                draft[index] = "";
+            });
         }
     }
 
@@ -36,7 +45,7 @@ const ModelParInput = ({nums, titles, placeholders, mode, onListChange, inputVal
             addonBefore={titles[i]}
             value={inputValueList[i]}
             onChange={(e) => onContentChange(e, i)}
-            status={inputsStatusList[i]}
+            status={inputsStatusList[i] as "" | "error" | "warning" | undefined}
             type="number"
         />);
     }
@@ -45,13 +54,13 @@ const ModelParInput = ({nums, titles, placeholders, mode, onListChange, inputVal
         <Space>
             {inputs}
             <Spin spinning={spinning}>
-                <Button type="primary" size="large" onClick={onRunClick}>执行{modeTitleDict[mode]}</Button>
+                <Button type="primary" size="large" onClick={onRunClick}>执行{modeTitleDict.get(mode)}</Button>
             </Spin>
         </Space>
     )
 };
 
-const ModeRadioGroup = ({mode,onModeChange}) => {
+const ModeRadioGroup = ({mode,onModeChange}:{mode:String, onModeChange: (e: RadioChangeEvent) => void}) => {
     return (
         <Space direction="horizontal">
             <Text>执行模式：</Text>
@@ -66,7 +75,18 @@ const ModeRadioGroup = ({mode,onModeChange}) => {
 }
 
 
-const ChangeModeAndInput = (
+interface ChangeModeAndInputProps {
+    mode:string,
+    nums:number,
+    titles:string[],
+    placeholders: string[],
+    onModeChange:(e: RadioChangeEvent) => void,
+    onInputListChange: (event: React.ChangeEvent<HTMLInputElement>, index: number) => void,
+    inputValueList:string[],
+    onRunClick:() => void,
+    spinning:boolean
+}
+const ChangeModeAndInput:React.FC<ChangeModeAndInputProps> = (
     {mode, nums, titles, placeholders, onModeChange, onInputListChange, inputValueList, onRunClick, spinning}
 ) => {
     return (

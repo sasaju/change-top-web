@@ -1,5 +1,5 @@
 import './App.css';
-import WebsiteTitle from "./ui/Title";
+import WebsiteTitle from "./ui/WebsiteTitle";
 import {MainPage} from "./ui/body/MainPage";
 
 function App() {
