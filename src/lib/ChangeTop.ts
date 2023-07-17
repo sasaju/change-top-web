@@ -121,7 +121,7 @@ export function read(
                 const res_ags = handleLine(
                     line,
                     inputContentList,
-                    sectionsNumIndex.pairs,
+                    sectionsNumIndex.angles,
                     mode
                 );
                 checkAndOutputStr(res_ags);
