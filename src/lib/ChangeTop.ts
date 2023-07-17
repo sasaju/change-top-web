@@ -14,8 +14,8 @@ interface SectionsNumIndex {
 const sectionsNumIndex: SectionsNumIndex = {
     atoms: [0, 5],
     bonds: [0, 1],
-    pairs:[0, 1, 2],
-    angles:[0, 1, 2, 3],
+    pairs:[0, 1],
+    angles:[0, 1, 2],
     dihedrals: [0, 1, 2, 3],
     positionRestraints: [0],
     dihedralRestraints: [0, 1, 2, 3],
