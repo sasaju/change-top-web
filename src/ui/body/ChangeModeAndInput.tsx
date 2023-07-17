@@ -1,6 +1,6 @@
-import {Input, Space, Radio, Button, Typography, Spin} from "antd";
+import {Input, Space, Radio, Button, Typography, Spin, Tooltip} from "antd";
 import {useImmer} from "use-immer";
-import React from "react";
+import React, {JSX} from "react";
 import {RadioChangeEvent} from "antd/es/radio/interface";
 const { Text } = Typography;
 
@@ -22,7 +22,7 @@ interface ModelParInputProps {
 }
 
 const ModelParInput:React.FC<ModelParInputProps> = ({nums, titles, placeholders, mode, onListChange, inputValueList, onRunClick, spinning}) => {
-    const inputs = [];
+    const inputs:JSX.Element[] = [];
     const [inputsStatusList, updateInputStatusList] = useImmer(["", "", ""])
     function onContentChange(event: React.ChangeEvent<HTMLInputElement>, index: number) {
         onListChange(event, index);
@@ -54,7 +54,9 @@ const ModelParInput:React.FC<ModelParInputProps> = ({nums, titles, placeholders,
         <Space>
             {inputs}
             <Spin spinning={spinning}>
+                <Tooltip title="目前支持atoms、bonds、pairs、angles、dihedrals、position_restraints、dihedral_restraints的序号处理">
                 <Button type="primary" size="large" onClick={onRunClick}>执行{modeTitleDict.get(mode)}</Button>
+                </Tooltip>
             </Spin>
         </Space>
     )
