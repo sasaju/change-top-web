@@ -4,6 +4,8 @@ import processString from "./StringUtil";
 interface SectionsNumIndex {
     atoms: number[];
     bonds: number[];
+    pairs:number[];
+    angles:number[];
     dihedrals: number[];
     positionRestraints: number[];
     dihedralRestraints: number[];
@@ -12,6 +14,8 @@ interface SectionsNumIndex {
 const sectionsNumIndex: SectionsNumIndex = {
     atoms: [0, 5],
     bonds: [0, 1],
+    pairs:[0, 1, 2],
+    angles:[0, 1, 2, 3],
     dihedrals: [0, 1, 2, 3],
     positionRestraints: [0],
     dihedralRestraints: [0, 1, 2, 3],
@@ -103,6 +107,24 @@ export function read(
                     mode
                 );
                 checkAndOutputStr(res_dr);
+                break;
+            case "pairs" || "pairs_nb" :
+                const res_prs = handleLine(
+                    line,
+                    inputContentList,
+                    sectionsNumIndex.pairs,
+                    mode
+                );
+                checkAndOutputStr(res_prs);
+                break;
+            case "angles":
+                const res_ags = handleLine(
+                    line,
+                    inputContentList,
+                    sectionsNumIndex.pairs,
+                    mode
+                );
+                checkAndOutputStr(res_ags);
                 break;
             default:
                 outputStr(line + "\n");
