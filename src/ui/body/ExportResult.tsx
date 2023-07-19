@@ -1,8 +1,10 @@
-import React from 'react';
-import {Button, message} from 'antd';
+import React, {useState} from 'react';
+import {Button, Input, message, Space, Typography} from 'antd';
 import { saveAs } from 'file-saver';
+const {Text} = Typography;
 
-const DownloadFile = ({filename, text}:{filename:string, text:string}) => {
+const DownloadFile = ({text}:{text:string}) => {
+    const [filename, updateFilename] = useState("result.txt")
     const handleDownload = () => {
         if (text===""){
             message.error("结果为空")
@@ -13,9 +15,21 @@ const DownloadFile = ({filename, text}:{filename:string, text:string}) => {
     };
 
     return (
-        <Button type="primary" onClick={handleDownload} size="large">
-            导出结果
-        </Button>
+        <Space direction="horizontal">
+            <Text>
+                输出文件名：
+            </Text>
+            <Input
+                key="filename"
+                placeholder="输入文件名"
+                size="large"
+                value={filename}
+                onChange={(i) => updateFilename(i.target.value)}
+            />
+            <Button type="primary" onClick={handleDownload} size="large">
+                导出结果
+            </Button>
+        </Space>
     );
 };
 

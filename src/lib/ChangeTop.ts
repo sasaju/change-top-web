@@ -45,9 +45,12 @@ export function read(
         }
     }
 
+    let index = 0
     for (const line of lines) {
+        index += 1
         // 检查是否是";"或者"#"开头或者无内容，如果是，则直接输出不做处理
         if (containSpecialChar(line)) {
+            if (index)
             outputStr(line + "\n");
             continue;
         }

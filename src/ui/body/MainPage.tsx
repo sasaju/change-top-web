@@ -6,6 +6,7 @@ import {ChangeEvent, useState} from "react";
 import {useImmer} from "use-immer";
 import {handleTopStr} from "../../lib/repo";
 import {RadioChangeEvent} from "antd/es/radio/interface";
+import BottomContent from "./BottomContent";
 
 const ControlButtons = ({handleFileChosen,handleReset}:{
     handleFileChosen:(file:File) =>void,
@@ -123,13 +124,12 @@ export const MainPage = () => {
         )
     }
     return(
-        <>
+        <Space direction="vertical">
             <ControlButtons
                 handleFileChosen={handleFileChosen}
                 handleReset={handleReset}
             />
 
-            <br/><br/>
 
             <ChangeModeAndInput
                 mode={mode}
@@ -143,8 +143,6 @@ export const MainPage = () => {
                 spinning={spinning}
             />
 
-            <br/><br/>
-
             <LeftAndRightTextArea
                 leftValue={leftValue}
                 onLeftChange={onLeftChange}
@@ -152,12 +150,15 @@ export const MainPage = () => {
                 onRightChange={onRightChange}
             />
 
-            <br/><br/>
-
             <DownloadFile
-                filename="rerult.txt"
                 text={rightValue}
             />
-        </>
+
+            <br/><br/>
+
+            <BottomContent/>
+
+            <br/><br/>
+        </Space>
     )
 }

@@ -23,7 +23,7 @@ const RightTextArea:React.FC<TextAreaProps> = ({value,onChange}) => {
             value={value}
             rows={20}
             style={{"fontFamily": "monospace", "fontSize":"15px",flex:1}}
-            placeholder="此处输出结果，同时允许对结果进行编辑，可以复制也可以点击编辑框上方的“导出为文件”"
+            placeholder="此处输出结果，同时允许对结果进行编辑，可以复制也可以点击编辑框下方的“导出结果”"
             onChange={onChange}
         />
     )
