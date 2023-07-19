@@ -37,6 +37,7 @@ export function read(
     let lines = contentStr.split("\n");
     let nowSection = "";
 
+    // 如果是最后一个则不输出换行符
     function checkAndOutputStr(res: string) {
         if (res !== "") {
             outputStr(res + "\n");
@@ -45,13 +46,17 @@ export function read(
         }
     }
 
-    let index = 0
+    let lineIndex = 0
     for (const line of lines) {
-        index += 1
+        lineIndex += 1
+        const isLast = lineIndex===lines.length
         // 检查是否是";"或者"#"开头或者无内容，如果是，则直接输出不做处理
         if (containSpecialChar(line)) {
-            if (index)
-            outputStr(line + "\n");
+            if (isLast){
+                outputStr(line);
+            }else {
+                outputStr(line + "\n");
+            }
             continue;
         }
 

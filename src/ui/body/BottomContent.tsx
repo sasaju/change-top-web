@@ -37,6 +37,7 @@ const ReleaseNoteDialog = ({open, onCancel}:{open:boolean, onCancel:() => void})
         centered={true}
         >
             <p>0.1.2-alpha：实现基本功能  2023-07-19</p>
+            <p>0.1.3-alpha：修复在尾端添加多余空行的Bug  2023-07-19</p>
         </Modal>
     )
 }
