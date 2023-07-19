@@ -100,6 +100,7 @@ export const MainPage = () => {
                  if (status==="ok"){
                      message.info("程序还在alpha阶段，请仔细检查生成是否正确，如有错误可以点击下方工具源码提issue",5  )
                  }else {
+                     setRightValue("")
                      message.error("发生错误，请检查输入格式是否正确。如未找到原因，可以点击下方工具源码提issue",5)
                  }
             }
