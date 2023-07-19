@@ -9,9 +9,8 @@
 ## 在线使用
 
 在线工具海外地址：https://tools.drugfly.top/ \
-在线工具国内地址（任选其一）：\
-（推荐）https://cgtop-1303839392.cos.ap-beijing.myqcloud.com/index.html \
-（备用，可能需要登录一下）https://www.wulihub.com.cn/gc/qpY2nB/index.html
+在线工具国内地址：\
+（可能需要登录一下）https://www.wulihub.com.cn/gc/qpY2nB/index.html
 
 ## 开发人员本地运行
 ```bash
