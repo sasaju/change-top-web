@@ -6,7 +6,12 @@ import {read} from "./ChangeTop";
 
 export function handleTopStr(leftValue:string, mode:string,inputContentList:string[] ,outputOneLine:(oneLine:string)=>void) {
     return new Promise(function (resolve, reject) {
-        read(leftValue, (oneLine) => outputOneLine(oneLine),mode, inputContentList)
-        resolve("")
+        try{
+            read(leftValue, (oneLine) => outputOneLine(oneLine), mode, inputContentList)
+            resolve("ok")
+        }catch (e){
+            resolve("error")
+        }
+
     })
 }
