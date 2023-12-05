@@ -12,6 +12,9 @@
 在线工具国内地址：\
 （可能需要登录一下）https://www.wulihub.com.cn/gc/qpY2nB/index.html
 
+\
+简单的使用教程（对照李老师的博文查看）：https://mp.weixin.qq.com/s/uy_R8KC21_SZL9Khf9vF9w
+
 ## 开发人员本地运行
 ```bash
 npm start run
